@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #4299e1;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            padding: 8px 15px;
+            background-color: #fff;
+            color: #4299e1;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background-color: #f5f5f5;
+        }
+        .content {
+            margin: 50px auto;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>系统名称</div>
+        <div>
+            <span id="currentUser">欢迎您，{{ current_user }}！</span>
+            <a href="{{ url_for('logout') }}"><button class="logout-btn" id="logoutBtn">退出登录</button></a>
+        </div>
+    </div>
+    <div class="content">
+        <h1 id="homePageTitle">系统首页</h1>
+        <p>登录成功，正在跳转至功能页面...</p>
+    </div>
+</body>
+</html>

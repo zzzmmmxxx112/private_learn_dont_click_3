@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            width: 350px;
+            margin: 100px auto;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 5px rgba(66,153,225,0.3);
+        }
+        .verify-code {
+            display: flex;
+            gap: 10px;
+        }
+        .code-img {
+            width: 100px;
+            height: 40px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 2px;
+        }
+        .remember-pwd {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .remember-pwd input {
+            width: auto;
+            margin-right: 8px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background-color: #3182ce;
+        }
+        .forgot-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        .error-msg {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 15px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>系统登录</h2>
+        <div class="error-msg">
+            {{ error_msg }}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            {{ messages[0] }}  <!-- 优先显示flash消息 -->
+        {% endif %}
+    {% endwith %}
+</div>
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username"
+                       value="{{ saved_username }}" placeholder="请输入用户名" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password"
+                       value="{{ saved_password }}" placeholder="请输入密码" required>
+            </div>
+            <div class="form-group verify-code">
+                <div>
+                    <label for="verifyCode">验证码</label>
+                    <input type="text" id="verifyCode" name="verifyCode" placeholder="请输入验证码" required>
+                </div>
+                <div class="code-img">{{ verify_code }}</div>
+            </div>
+            <div class="remember-pwd">
+                <input type="checkbox" id="rememberPwd" name="rememberPwd"
+                       {% if saved_username %}checked{% endif %}>
+                <label for="rememberPwd">记住密码</label>
+            </div>
+            <button type="submit" class="login-btn" id="loginBtn">登录</button>
+            <a href="{{ url_for('forgot_password') }}" class="forgot-link">忘记密码？</a>
+        </form>
+    </div>
+</body>
+</html>
